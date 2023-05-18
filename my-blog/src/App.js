@@ -4,18 +4,21 @@ import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import ArticlePage from './pages/ArticlePage';
 import ArticlesListPage from './pages/ArticlesListPage';
+import NavBar from './NavBar';
 
 function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <h1>My Awesome Blog</h1>
-        <Routes>
-          <Route path='/' element={<HomePage />} />
-          <Route path='/about' element={<AboutPage />} />
-          <Route path='/articles' element={<ArticlesListPage />} />
-          <Route path='/articles/:articleId' element={<ArticlePage />} />
-        </Routes>
+        <NavBar />
+        <div id="page-body">
+          <Routes>
+            <Route path='/' element={<HomePage />} />
+            <Route path='/about' element={<AboutPage />} />
+            <Route path='/articles' element={<ArticlesListPage />} />
+            <Route path='/articles/:articleId' element={<ArticlePage />} />
+          </Routes>
+        </div>
       </div>
     </BrowserRouter>
   );
