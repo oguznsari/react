@@ -13,6 +13,9 @@ const ArticleSchema = new mongoose.Schema(
         },
         comments: {
             type: [Object]
+        },
+        upvoteIds: {
+            type: [String]
         }
     }
 );
