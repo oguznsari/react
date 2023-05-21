@@ -6,11 +6,13 @@ import axios from "axios";
 import CommentsList from "../components/CommentsList";
 import { BiLike } from "react-icons/bi";
 import AddCommentForm from "../components/AddCommentForm";
+import useUser from "../hooks/useUser";
 
 const ArticlePage = () => {
     const [articleInfo, setArticleInfo] = useState({ upvotes: 0, comments: [] });
-
     const { articleId } = useParams();
+
+    const { user, isLoading } = useUser();
     const article = articles.find(article => article.name === articleId);
 
     useEffect(() => {
@@ -37,18 +39,28 @@ const ArticlePage = () => {
         <>
             <h1>{article.title}</h1>
             <div className="upvote-section">
-                <button onClick={addUpvote}><BiLike /> Upvote</button>
+                {user
+                    ? <button onClick={addUpvote}><BiLike /> Upvote</button>
+                    : <button>Log in to upvote</button>
+                }
                 <p>This Article has: {articleInfo.upvotes} upvote(s)</p>
             </div>
             {article.content.map((paragraph, i) => (
                 <p key={i}>{paragraph}</p>
             ))}
-            <AddCommentForm
-                articleName={articleId}
-                onArticleUpdated={
-                    updatedArticle => setArticleInfo(updatedArticle)
-                }
-            />
+
+            {user
+                ?
+                <AddCommentForm
+                    articleName={articleId}
+                    onArticleUpdated={
+                        updatedArticle => setArticleInfo(updatedArticle)
+                    }
+                />
+                : <button>Log in to add comment</button>
+
+            }
+
             <CommentsList comments={articleInfo.comments} />
         </>
     )
