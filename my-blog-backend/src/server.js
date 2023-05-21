@@ -3,6 +3,10 @@ const admin = require('firebase-admin');
 const express = require("express");
 const dotenv = require("dotenv").config();
 const { StatusCodes } = require("http-status-codes");
+const { fileURLToPath } = require('url');
+// const path = require('path');
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
 
 const credentials = JSON.parse(
     fs.readFileSync('./credentials.json')
@@ -13,6 +17,11 @@ admin.initializeApp({
 
 const app = express();
 app.use(express.json());
+
+//app.use(express.static(path.join(__dirname, '../build')));
+app.get(/^(?!\/api).+/, (req, res) => {
+    res.sendFile(path.join(__dirname, '../build/index.html'));
+})
 
 app.use(async (req, res, next) => {
     const { authtoken } = req.headers;
@@ -30,6 +39,7 @@ app.use(async (req, res, next) => {
 
 const connectDB = require('../db/connect');
 const Article = require('../models/Article');
+const path = require('path');
 
 app.get('/api/articles/:name', async (req, res) => {
     const { name } = req.params;
