@@ -21,9 +21,10 @@ app.use(async (req, res, next) => {
         try {
             req.user = await admin.auth().verifyIdToken(authtoken);
         } catch (error) {
-            res.status(StatusCodes.BAD_REQUEST);
+            return res.status(StatusCodes.BAD_REQUEST);
         }
     }
+    req.user = req.user || {};
     next();
 });
 
@@ -39,7 +40,7 @@ app.get('/api/articles/:name', async (req, res) => {
     const article = await Article.findOne({ name });
     if (article) {
         const upvoteIds = article.upvoteIds || [];
-        article.canUpvote = uid && !upvoteIds.include(uid);
+        article.canUpvote = uid && !upvoteIds.includes(uid);
         res.status(StatusCodes.OK).json({ article });
     } else {
         res.status(StatusCodes.NOT_FOUND).json({ msg: `No article found with the name: ${name}` })
@@ -62,7 +63,7 @@ app.put('/api/articles/:name/upvote', async (req, res) => {
     const article = await Article.findOne({ name });
     if (article) {
         const upvoteIds = article.upvoteIds || [];
-        const canUpvote = uid && !upvoteIds.include(uid);
+        const canUpvote = uid && !upvoteIds.includes(uid);
 
         if (canUpvote) {
             article.upvotes += 1;
