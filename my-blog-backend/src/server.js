@@ -1,6 +1,15 @@
+const fs = require('fs');
+const admin = require('firebase-admin');
 const express = require("express");
 const dotenv = require("dotenv").config();
 const { StatusCodes } = require("http-status-codes");
+
+const credentials = JSON.parse(
+    fs.readFileSync('../credentials.json')
+);
+admin.initializeApp({
+    credential: admin.credential.cert(credentials)
+})
 
 const app = express();
 app.use(express.json());
