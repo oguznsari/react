@@ -50,13 +50,11 @@ const ArticlePage = () => {
             ))}
 
             {user
-                ?
-                <AddCommentForm
+                ? <AddCommentForm
                     articleName={articleId}
                     onArticleUpdated={
                         updatedArticle => setArticleInfo(updatedArticle)
-                    }
-                />
+                    } />
                 : <button>Log in to add comment</button>
 
             }
