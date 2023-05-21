@@ -12,7 +12,7 @@ const ArticleSchema = new mongoose.Schema(
             default: 0
         },
         comments: {
-            type: [String]
+            type: [Object]
         }
     }
 );

@@ -1,28 +1,48 @@
-import express from "express";
+const express = require("express");
+const dotenv = require("dotenv").config();
+const { StatusCodes } = require("http-status-codes");
 
 const app = express();
 app.use(express.json());
+const connectDB = require('../db/connect');
+const Article = require('../models/Article');
 
-app.put('/api/articles/:name/upvote', (req, res) => {
+app.get('/api/articles/:name', async (req, res) => {
     const { name } = req.params;
-    const artilce = articlesInfo.find(a => a.name === name);
+    await connectDB(process.env.MONGO_URI);
 
-    if (artilce) {
-        artilce.upvotes += 1;
-        res.send(`The ${name} article now has ${artilce.upvotes} upvotes!!!`)
+    const article = await Article.findOne({ name });
+    if (article) {
+        res.status(StatusCodes.OK).json({ article });
+    } else {
+        res.status(StatusCodes.NOT_FOUND).json({ msg: `No article found with the name: ${name}` })
+    }
+})
+
+app.put('/api/articles/:name/upvote', async (req, res) => {
+    const { name } = req.params;
+    await connectDB(process.env.MONGO_URI);
+
+    const article = await Article.findOne({ name });
+    if (article) {
+        article.upvotes += 1;
+        article.save();
+        res.send(`The ${name} article now has ${article.upvotes} upvotes!!!`)
     } else {
         res.send('That article doesn\'t exists.');
     }
 });
 
-app.post('/api/articles/:name/comments', (req, res) => {
+app.post('/api/articles/:name/comments', async (req, res) => {
     const { name } = req.params;
     const { postedBy, text } = req.body;
+    await connectDB(process.env.MONGO_URI);
 
-    const article = articlesInfo.find(a => a.name === name);
+    const article = await Article.findOne({ name });
 
     if (article) {
         article.comments.push({ postedBy, text });
+        article.save();
         res.send(article.comments);
     } else {
         res.send('That article doesn\'t exists.');
