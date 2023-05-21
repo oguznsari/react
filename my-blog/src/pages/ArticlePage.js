@@ -4,6 +4,7 @@ import NotFoundPage from "./NotFoundPage";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import CommentsList from "../components/CommentsList";
+import { BiLike } from "react-icons/bi";
 
 const ArticlePage = () => {
     const [articleInfo, setArticleInfo] = useState({ upvotes: 0, comments: [] });
@@ -21,6 +22,11 @@ const ArticlePage = () => {
         loadArticleInfo()
     }, [])
 
+    const addUpvote = async () => {
+        const response = await axios.put(`/api/articles/${articleId}/upvote`);
+        const updatedArticle = response.data;
+        setArticleInfo(updatedArticle);
+    }
 
     if (!article) {
         return <NotFoundPage />
@@ -29,7 +35,10 @@ const ArticlePage = () => {
     return (
         <>
             <h1>{article.title}</h1>
-            <p>This Article has: {articleInfo.upvotes} upvote(s)</p>
+            <div className="upvote-section">
+                <button onClick={addUpvote}><BiLike /> Upvote</button>
+                <p>This Article has: {articleInfo.upvotes} upvote(s)</p>
+            </div>
             {article.content.map((paragraph, i) => (
                 <p key={i}>{paragraph}</p>
             ))}
