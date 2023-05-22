@@ -8,13 +8,13 @@ import LearnMore from "./LearnMore"
 
 const Home = () => {
   return (
-    <>
+    <div id="home__container">
       <Banner />
       <Products />
       <Promo />
       <LearnMore />
       <Footer />
-    </>
+    </div>
   );
 };
 
