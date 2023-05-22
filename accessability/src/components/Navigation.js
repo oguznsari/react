@@ -9,7 +9,7 @@ const Navigation = () => {
         <img src={logo} alt="logo" className="logo" />
       </a>
       <nav>
-        <a href="#products">Skip Navigation</a>
+        <a href="#learn_more" className="skip_link">Skip Navigation</a>
         <a href="/">Home</a>
         <a href="/about">About</a>
         <a href="/tours-events">Tours & Events</a>

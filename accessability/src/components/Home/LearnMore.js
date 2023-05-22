@@ -3,7 +3,7 @@ import "styles/learn-more.css"
 
 const LearnMore = () => {
   return (
-    <section className="learn_more">
+    <section className="learn_more" id="learn_more">
       <div className="learn_more__container">
         <div className="learn_more__articles">
           <article>
