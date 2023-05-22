@@ -1,31 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 
 function App() {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    fetch(`https://api.github.com/users`)
-      .then(response => response.json())
-      .then(res => setData(res))
-  }, []);
-
-  if (data) {
-    return (
-      <div>
-        <ul>
-          {data.map((user) => (
-            <li key={user.id}>{user.login}</li>
-          ))}
-        </ul>
-        <button onClick={() => setData([])}>Remove Data</button>
-      </div>
-    )
-  }
-
+  const [checked, toggle] = useReducer(
+    (checked) => !checked,
+    false
+  )
   return (
-    <p>No users.</p>
+    <>
+      <input
+        type='checkbox'
+        value={checked}
+        onChange={toggle}
+      />
+      {checked ? "checked" : "not checked"}
+    </>
   )
 }
 
