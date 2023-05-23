@@ -2,7 +2,8 @@ import {
     loadTodosInProgress,
     loadTodosSuccess,
     loadTodosFailure,
-    createTodo
+    createTodo,
+    removeTodo
 } from "./actions";
 
 export const displayAlert = text => () => {
@@ -39,5 +40,20 @@ export const addTodoRequest = text => async dispatch => {
         dispatch(createTodo(todo));
     } catch (error) {
         dispatch(displayAlert(error));
+    }
+}
+
+export const removeTodoRequest = id => async dispatch => {
+    try {
+        const response = await fetch(`http://localhost:8080/todos/${id}`,
+            {
+                method: "delete"
+            }
+        );
+
+        const removedTodo = await response.json();
+        dispatch(removeTodo(removedTodo));
+    } catch (error) {
+        dispatch(displayAlert(error))
     }
 }
