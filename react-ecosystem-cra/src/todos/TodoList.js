@@ -14,7 +14,7 @@ const TodoList = ({ todos = [], onRemovePressed, onCompletedPressed, onDisplayAl
                 <TodoListItem
                     todo={todo}
                     onRemovePressed={onRemovePressed}
-                    onCompletedPressed={onDisplayAlertClicked}
+                    onCompletedPressed={onCompletedPressed}
                 />
             )}
         </div>
