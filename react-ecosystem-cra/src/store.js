@@ -1,5 +1,5 @@
 import { legacy_createStore as createStore, combineReducers, applyMiddleware } from "redux";
-import { todos } from "./todos/reducers";
+import { todos, isLoading } from "./todos/reducers";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import autoMergeLevel2 from "redux-persist/lib/stateReconciler/autoMergeLevel2";
@@ -8,6 +8,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 
 const reducers = {
     todos,
+    isLoading
 };
 
 const persistConfig = {

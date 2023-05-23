@@ -15,6 +15,4 @@ export const loadTodos = () => async (dispatch, getState) => {
         dispatch(loadTodosFailure());
         dispatch(displayAlert(error));
     }
-
-
 }
