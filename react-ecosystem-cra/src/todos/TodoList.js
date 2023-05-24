@@ -7,7 +7,12 @@ import { displayAlert } from "./thunks";
 import { isLoading } from "./reducers";
 import { loadTodos, removeTodoRequest, markTodoAsCompletedRequest } from "./thunks";
 import { getCompletedTodos, getIncompleteTodos, getTodos, getTodosLoading } from "./selectors";
+import styled from "styled-components";
 
+const BigRedText = styled.div`
+    font-size: 48px;
+    color: #FF0000;
+`;
 
 const TodoList = ({
     completedTodos,
@@ -26,6 +31,7 @@ const TodoList = ({
 
     const content = (
         <div className="list-wrapper">
+            <BigRedText>I'm a Styled-Component!</BigRedText>
             <NewTodoForm />
             <h3>Incomplete:</h3>
             {incompletedTodos.map(todo =>
