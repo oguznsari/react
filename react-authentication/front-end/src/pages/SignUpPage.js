@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useToken } from "../auth/UseToken";
+import axios from "axios";
 
 export const SignUpPage = () => {
+    const [token, setToken] = useToken();
     const [emailValue, setEmailValue] = useState("");
     const [passwordValue, setPasswordValue] = useState("");
     const [confirmPasswordValue, setConfirmPasswordValue] = useState("");
@@ -10,7 +13,14 @@ export const SignUpPage = () => {
     const history = useHistory();
 
     const onSignUpClicked = async () => {
-        alert('signup not implemented yet!');
+        const response = await axios.post('/api/signup', {
+            email: emailValue,
+            password: passwordValue
+        });
+
+        const { token } = response.data;
+        setToken(token);
+        history.push('/');
     }
 
     return (
@@ -29,12 +39,12 @@ export const SignUpPage = () => {
                 onChange={e => setPasswordValue(e.target.value)}
                 type="password"
                 placeholder="password" />
-            <hr />
             <input
                 value={confirmPasswordValue}
                 onChange={e => setConfirmPasswordValue(e.target.value)}
                 type="password"
                 placeholder="confirm-password" />
+            <hr />
             <button
                 disabled={
                     !emailValue
