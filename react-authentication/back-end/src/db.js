@@ -1,15 +1,10 @@
-import { MongoClient } from 'mongodb';
+const mongoose = require('mongoose');
 
 let client;
 
-export const initializeDbConnection = async () => {
-    client = await MongoClient.connect('mongodb://localhost:27017', {
+export const initializeDbConnection = async (url) => {
+    return mongoose.connect(url, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
-    });
-}
-
-export const getDbConnection = dbName => {
-    const db = client.db(dbName);
-    return db;
+    })
 }

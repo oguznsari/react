@@ -1,6 +1,7 @@
 import express from 'express';
 import { routes } from './routes';
 import { initializeDbConnection } from './db';
+const dotenv = require("dotenv").config();
 
 const PORT = process.env.PORT || 8080;
 
@@ -19,7 +20,7 @@ routes.forEach(route => {
 // Connect to the database, then start the server.
 // This prevents us from having to create a new DB
 // connection for every request.
-initializeDbConnection()
+initializeDbConnection(process.env.MONGO_URI)
     .then(() => {
         app.listen(PORT, () => {
             console.log(`Server is listening on port ${PORT}`);
