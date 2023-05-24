@@ -46,7 +46,10 @@
     "@babel/plugin-transform-runtime": "^7.21.4",
     "@babel/register": "^7.21.0",
     "chai": "^4.3.7",
+    "fetch-mock": "^9.11.0",
     "mocha": "^10.2.0",
+    "node-fetch": "^3.3.1",
+    "sinon": "^15.1.0",
     "styled-components": "^5.3.10"
   }
 }
