@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { ObjectId } from "mongoose";
+import mongoose, { ObjectId } from "mongoose";
 import { initializeDbConnection } from "../db";
 import { StatusCodes } from "http-status-codes";
 import User from "../models/User";
@@ -9,9 +9,9 @@ export const updateUserInfoRoute = {
     method: "put",
     handler: async (req, res) => {
         const { authorization } = req.headers;
-        const userId = req.params;
+        const { userId } = req.params;
 
-        const updates = ({
+        const updates = (({
             favoriteFood,
             hairColor,
             bio
@@ -19,7 +19,7 @@ export const updateUserInfoRoute = {
             favoriteFood,
             hairColor,
             bio
-        })(req.body);
+        }))(req.body);
 
         if (!authorization) {
             return res
@@ -39,13 +39,14 @@ export const updateUserInfoRoute = {
                 .json({ message: "Not allowed to update that user's data." })
 
             await initializeDbConnection(process.env.MONGO_URI);
+            var objId = new mongoose.Types.ObjectId(id);
             const result = await User.findOneAndUpdate(
-                { _id: ObjectId(id) },
+                { _id: objId },
                 { $set: { info: updates } },
                 { returnOriginal: false }
             );
 
-            const { email, isVerified, info } = result.value;
+            const { email, isVerified, info } = result;
             jwt.sign(
                 { id, email, isVerified, info },
                 process.env.JWT_SECRET,
