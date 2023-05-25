@@ -18,7 +18,6 @@ export const forgotPasswordRoute = {
         let result = false;
         if (user) {
             user.passwordResetCode = passowrdResetCode;
-            console.log({ user });
             result = await user.save();
         }
 
