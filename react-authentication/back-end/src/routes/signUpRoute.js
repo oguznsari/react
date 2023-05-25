@@ -45,7 +45,7 @@ export const signUpRoute = {
                 subject: 'Please verify your email',
                 text: `
                     Thanks for signing up! To verify your email, click here:
-                    http://localhost:3000/verify-email/${verificationString}
+                    http://localhost:3000/please-verify/${verificationString}
                 `
             });
         } catch (error) {
