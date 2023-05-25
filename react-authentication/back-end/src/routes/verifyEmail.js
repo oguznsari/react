@@ -1,4 +1,4 @@
-import { jwt } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import { initializeDbConnection } from "../db";
 import User from "../models/User";
 import { StatusCodes } from "http-status-codes";
@@ -17,6 +17,7 @@ export const verifyEmailRoute = {
 
         user.isVerified = true;
         await user.save();
+        const { _id: id, email, info } = user;
 
         jwt.sign(
             { id, email, isVerified: true, info },
