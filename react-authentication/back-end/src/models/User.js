@@ -24,6 +24,9 @@ const UserSchema = new mongoose.Schema(
         },
         passwordResetCode: {
             type: String
+        },
+        googleId: {
+            type: String
         }
     }
 );
