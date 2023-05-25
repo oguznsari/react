@@ -21,6 +21,9 @@ const UserSchema = new mongoose.Schema(
         },
         verificationString: {
             type: String
+        },
+        passwordResetCode: {
+            type: String
         }
     }
 );
