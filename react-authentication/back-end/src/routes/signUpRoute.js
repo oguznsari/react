@@ -3,6 +3,8 @@ import { initializeDbConnection } from '../db';
 import { StatusCodes } from "http-status-codes";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { v4 as uuid } from "uuid";
+import { sendEmail } from '../util/sendEmail';
 
 export const signUpRoute = {
     path: '/api/signup',
@@ -17,8 +19,8 @@ export const signUpRoute = {
             res.status(StatusCodes.CONFLICT);
         }
 
-        console.log({ password })
         const passwordHash = await bcrypt.hash(password, 10);
+        const verificationString = uuid();
 
         const startingInfo = {
             hairColor: "",
@@ -30,10 +32,26 @@ export const signUpRoute = {
             email,
             passwordHash,
             info: startingInfo,
-            isVerified: false
+            isVerified: false,
+            verificationString
         });
 
         const { insertedId } = result;
+
+        try {
+            await sendEmail({
+                to: email,
+                from: 'emailsend459@gmail.com',
+                subject: 'Please verify your email',
+                text: `
+                    Thanks for signing up! To verify your email, click here:
+                    http://localhost:3000/verify-email/${verificationString}
+                `
+            });
+        } catch (error) {
+            console.log({ error });
+            res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
+        }
 
         jwt.sign(
             {

@@ -3,6 +3,7 @@ import mongoose, { ObjectId } from "mongoose";
 import { initializeDbConnection } from "../db";
 import { StatusCodes } from "http-status-codes";
 import User from "../models/User";
+import { sendEmail } from "../util/sendEmail";
 
 export const updateUserInfoRoute = {
     path: "/api/users/:userId",
@@ -33,10 +34,15 @@ export const updateUserInfoRoute = {
                 .status(StatusCodes.UNAUTHORIZED)
                 .json({ message: "Unable to verify token." })
 
-            const { id } = decoded;
+            const { id, isVerified } = decoded;
+
             if (id !== userId) return res
                 .status(StatusCodes.FORBIDDEN)
                 .json({ message: "Not allowed to update that user's data." })
+
+            if (!isVerified) return res
+                .status(StatusCodes.UNAUTHORIZED)
+                .json({ msg: "You need to verify your email before you can update your data." })
 
             await initializeDbConnection(process.env.MONGO_URI);
             var objId = new mongoose.Types.ObjectId(id);
@@ -46,7 +52,7 @@ export const updateUserInfoRoute = {
                 { returnOriginal: false }
             );
 
-            const { email, isVerified, info } = result;
+            const { email, info } = result;
             jwt.sign(
                 { id, email, isVerified, info },
                 process.env.JWT_SECRET,
