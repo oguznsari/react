@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./index.module.css";
 import Card from './Card';
-import { initStore } from "../store";
+import { initStore, initialCards, addItem } from "../store";
 
 class Index extends React.Component {
     static async getInitialProps({ store }) {
@@ -23,6 +23,7 @@ class Index extends React.Component {
                         ))
                     }
                 </div>
+                {/* <button onClick={() => dispatch(addItem)}></button> */}
             </div>
         );
     }
