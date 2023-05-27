@@ -10,11 +10,17 @@ export const resetPasswordRoute = {
         const { passwordResetCode } = req.params;
         const { newPassword } = req.body;
 
+        const newSalt = uuid();
+        const pepper = process.env.PEPPER_STRING;
+
         await initializeDbConnection(process.env.MONGO_URI);
-        const newPasswordHash = await bcrypt.hash(newPassword, 10);
+        const newPasswordHash = await bcrypt.hash(
+            newSalt + newPassword + pepper,
+            10);
 
         const user = await User.findOne({ passwordResetCode });
         user.passwordHash = newPasswordHash;
+        user.salt = newSalt;
 
         let result = await user.save();
         if (!result) {

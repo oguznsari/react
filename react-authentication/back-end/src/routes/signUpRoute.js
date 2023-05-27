@@ -19,7 +19,11 @@ export const signUpRoute = {
             res.status(StatusCodes.CONFLICT);
         }
 
-        const passwordHash = await bcrypt.hash(password, 10);
+        const salt = uuid();
+        const pepper = process.env.PEPPER_STRING;
+        const passwordHash = await bcrypt.hash(
+            salt + password + pepper
+            , 10);
         const verificationString = uuid();
 
         const startingInfo = {
@@ -30,6 +34,7 @@ export const signUpRoute = {
 
         const result = await User.create({
             email,
+            salt,
             passwordHash,
             info: startingInfo,
             isVerified: false,

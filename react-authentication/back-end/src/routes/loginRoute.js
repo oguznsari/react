@@ -15,8 +15,11 @@ export const logInRoute = {
         const user = await User.findOne({ email });
         if (!user) return res.status(StatusCodes.UNAUTHORIZED).json({ msg: "Unauthorized" });
 
-        const { _id: id, isVerified, passwordHash, info } = user;
-        const isCorrect = await bcrypt.compare(password, passwordHash);
+        const { _id: id, isVerified, passwordHash, salt, info } = user;
+        const pepper = process.env.PEPPER_STRING;
+        const isCorrect = await bcrypt.compare(
+            salt + password + pepper,
+            passwordHash);
 
         if (isCorrect) {
             jwt.sign(

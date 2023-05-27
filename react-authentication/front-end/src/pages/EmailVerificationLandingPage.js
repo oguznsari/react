@@ -8,7 +8,7 @@ import { EmailVerificationFail } from "./EmailVerificationFail";
 export const EmailVerificationLandingPage = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [isSuccess, setIsSuccess] = useState(false);
-    const { vericationString } = useParams();
+    const verificationString = useParams();
     const [, setToken] = useToken();
 
     useEffect(() => {
@@ -16,7 +16,7 @@ export const EmailVerificationLandingPage = () => {
             try {
                 const response = await axios.put(
                     '/api/verify-email',
-                    { vericationString }
+                    { verificationString }
                 );
 
                 const { token } = response.data;
@@ -30,7 +30,7 @@ export const EmailVerificationLandingPage = () => {
         }
 
         loadVerification();
-    }, [setToken, vericationString])
+    }, [setToken, verificationString])
 
     if (isLoading) return <p>Loading...</p>;
     if (!isSuccess) return <EmailVerificationFail />
