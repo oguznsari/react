@@ -28,7 +28,7 @@ export const logInRoute = {
                 { expiresIn: process.env.JWT_LIFETIME },
                 (err, token) => {
                     if (err) {
-                        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(err);
+                        res.sendStatus(StatusCodes.INTERNAL_SERVER_ERROR);
                     }
                     res.status(StatusCodes.OK).json({ token })
                 }
