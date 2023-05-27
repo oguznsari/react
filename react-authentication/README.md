@@ -1,0 +1,1 @@
+[skipped-aws-cognito](https://www.linkedin.com/learning/react-authentication/amazon-cognito-basics?autoSkip=true&autoplay=true&contextUrn=urn%3Ali%3AlyndaLearningPath%3A593715e0498e9e9be7fb8506&resume=false&u=89254810)
