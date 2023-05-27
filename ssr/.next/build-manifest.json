@@ -5,8 +5,8 @@
   "devFiles": [],
   "ampDevFiles": [],
   "lowPriorityFiles": [
-    "static/MU3JqTtPk1v__NnMQ0i7K/_buildManifest.js",
-    "static/MU3JqTtPk1v__NnMQ0i7K/_ssgManifest.js"
+    "static/7Gmn0TU10G8vhdoJkncxy/_buildManifest.js",
+    "static/7Gmn0TU10G8vhdoJkncxy/_ssgManifest.js"
   ],
   "rootMainFiles": [],
   "pages": {
@@ -15,7 +15,7 @@
       "static/chunks/framework-cda2f1305c3d9424.js",
       "static/chunks/main-6f0913649682f6ca.js",
       "static/css/2e75514ffb38473a.css",
-      "static/chunks/pages/index-a9db46cfc4969926.js"
+      "static/chunks/pages/index-03708cda25395daa.js"
     ],
     "/Card": [
       "static/chunks/webpack-8fa1640cc84ba8fe.js",
